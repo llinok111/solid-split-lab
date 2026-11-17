@@ -1,6 +1,6 @@
 # solid-split-lab
 
-**Plane-cut a closed triangle mesh into two *closed* solids:** 15/15 corpus cuts accepted, **30/30 pieces watertight** (0 open, 0 non-manifold, 0 flipped edges) with volume error **4.3e-16** against an analytic box oracle. The baseline that clips triangles without caps — what most browser "section plane" demos do — leaves **2,136 open boundary edges** on 8 cuts and an enclosed-volume estimate that is **65.5% wrong** on one half.
+**Plane-cut a closed triangle mesh into two *closed* solids:** 15/15 non-annular corpus cuts accepted (16/17 overall — the annulus is refused by contract), **30/30 pieces watertight** (0 open, 0 non-manifold, 0 flipped edges) with volume error **4.3e-16** against an analytic box oracle. The baseline that clips triangles without caps — what most browser "section plane" demos do — leaves **2,136 open boundary edges** on 8 cuts and an enclosed-volume estimate that is **65.5% wrong** on one half.
 
 Upstream: none
 
@@ -31,7 +31,7 @@ No install step: zero npm dependencies. The browser page loads three.js **0.170.
 | Check | Measured | Command |
 |---|---|---|
 | corpus meshes closed | 9/9 | `bench/verify.mjs` §A |
-| valid cuts accepted | **15/15** | §B |
+| valid cuts accepted | **15/15** non-annular (16/17 overall) | §B / §E |
 | watertight pieces | **30/30**, boundary=nonManifold=flipped=0 | §B |
 | volume additivity V1+V2 vs V | max rel **8.7e-16** | §B |
 | cap area agreement between halves | max rel **1.4e-15** | §B |
