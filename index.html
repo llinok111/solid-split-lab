@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>solid-split-lab — a cut you can audit</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; font: 14px/1.45 ui-sans-serif, system-ui, sans-serif; background: #0d1117; color: #d8dee9; }
+  #app { display: grid; grid-template-columns: 1fr 360px; height: 100vh; }
+  #view { position: relative; }
+  canvas { display: block; }
+  aside { border-left: 1px solid #24303f; padding: 16px; overflow: auto; background: #11161d; }
+  h1 { font-size: 15px; margin: 0 0 4px; color: #eaf2ff; }
+  h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: #7f8fa6; margin: 18px 0 6px; }
+  .sub { color: #8b98ab; font-size: 12px; margin-bottom: 12px; }
+  label { display: block; margin: 10px 0 4px; color: #9fb0c7; font-size: 12px; }
+  input[type=range] { width: 100%; }
+  select { width: 100%; padding: 5px; background: #0d1117; color: #d8dee9; border: 1px solid #2b3a4d; border-radius: 4px; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  td { padding: 3px 0; border-bottom: 1px solid #1c2530; }
+  td:last-child { text-align: right; font-family: ui-monospace, monospace; }
+  .good { color: #3fb950; } .bad { color: #f85149; }
+  #fp { font-family: ui-monospace, monospace; background: #0a0e13; border: 1px solid #22303f; padding: 8px; border-radius: 4px; word-break: break-all; }
+  .hint { color: #6e7d91; font-size: 11px; margin-top: 8px; }
+</style>
+<script type="importmap">
+{ "imports": {
+    "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="app">
+  <div id="view"></div>
+  <aside>
+    <h1>solid-split-lab</h1>
+    <div class="sub">Plane-cut a closed mesh into <b>two closed solids</b>. The orange faces are generated caps — the part every clip-only demo throws away.</div>
+    <h2>Cut plane</h2>
+    <label for="normal">Normal</label>
+    <select id="normal">
+      <option value="0">z &nbsp;(0, 0, 1)</option>
+      <option value="1">tilted &nbsp;(0.6, 0.48, 0.64)</option>
+    </select>
+    <label for="offset">Offset <span id="offsetVal">0.00</span> × half-extent</label>
+    <input id="offset" type="range" min="-0.9" max="0.9" step="0.05" value="0.3" />
+    <label><input id="wire" type="checkbox" /> wireframe</label>
+    <h2>Live numbers (computed by src/core.mjs in this tab)</h2>
+    <table>
+      <tr><td>piece above (volume)</td><td id="vPlus">–</td></tr>
+      <tr><td>piece below (volume)</td><td id="vMinus">–</td></tr>
+      <tr><td>V above + V below</td><td id="vSum">–</td></tr>
+      <tr><td>original V</td><td id="vOrig">–</td></tr>
+      <tr><td>cap area above / below</td><td id="caps">–</td></tr>
+      <tr><td>watertight above / below</td><td id="wt">–</td></tr>
+    </table>
+    <h2>Same numbers as node?</h2>
+    <div id="fp">–</div>
+    <div class="hint" id="fpHint">Move the slider onto a baked plane to compare the FNV-1a fingerprint with <code>data/expected.json</code>.</div>
+    <div class="hint">Evidence: <code>node bench/verify.mjs</code>, <code>node bench/independent.mjs</code>, <code>node bench/bench.mjs</code>.</div>
+  </aside>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

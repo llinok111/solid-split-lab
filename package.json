@@ -1,0 +1,13 @@
+{
+  "name": "solid-split-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Watertight plane-cut of closed triangle meshes with exact volume accounting",
+  "scripts": {
+    "gen": "node tools/gen-sample.mjs",
+    "verify": "node bench/verify.mjs",
+    "bench": "node bench/bench.mjs",
+    "independent": "node bench/independent.mjs"
+  }
+}

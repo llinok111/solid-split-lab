@@ -1,0 +1,30 @@
+{
+  "note": "timing of 15 corpus cuts (9,884 triangles) in one batch; cold start = first batch after process start",
+  "trianglesPerBatch": 9884,
+  "cutsPerBatch": 15,
+  "coldStartMs": 50.109,
+  "samples": [
+    24.182,
+    24.257,
+    22.808,
+    18.785,
+    17.27,
+    25.231,
+    17.838,
+    19.061,
+    17.791,
+    22.08,
+    14.399
+  ],
+  "sampleCount": 11,
+  "minMs": 14.399,
+  "medianMs": 19.061,
+  "p95Ms": 25.231,
+  "stddevMs": 3.531,
+  "rsdPct": 17.36,
+  "medianMsPerCut": 1.271,
+  "trianglesPerSecond": 518553,
+  "okCuts": 15,
+  "watertightPieces": "30/30",
+  "node": "v24.19.0"
+}
