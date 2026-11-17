@@ -1,7 +1,7 @@
 // Render + interaction only. Every number on screen comes from src/core.mjs.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { splitMesh, fingerprintSplit, bbox, bboxDiag, capArea } from './src/core.mjs';
+import { splitMesh, fingerprintSplit, bbox, bboxDiag, capArea, signedVolume } from './src/core.mjs';
 
 const [corpus, expected] = await Promise.all([
   fetch('./data/corpus.json').then((r) => r.json()),
@@ -11,6 +11,7 @@ const mesh = corpus.meshes.find((m) => m.name === 'box');
 const bb = bbox(mesh.positions);
 const center = [(bb.lo[0] + bb.hi[0]) / 2, (bb.lo[1] + bb.hi[1]) / 2, (bb.lo[2] + bb.hi[2]) / 2];
 const diag = bboxDiag(mesh.positions);
+const originalVolume = signedVolume(mesh.positions, mesh.indices);
 const normals = [[0, 0, 1], [0.6, 0.48, 0.64]];
 
 const view = document.getElementById('view');
@@ -81,7 +82,7 @@ function rebuild() {
   document.getElementById('vPlus').textContent = fmt(r.pieces[1].volume);
   document.getElementById('vMinus').textContent = fmt(r.pieces[0].volume);
   document.getElementById('vSum').textContent = fmt(r.pieces[1].volume + r.pieces[0].volume);
-  document.getElementById('vOrig').textContent = fmt(4 / 3 * 0 + (r.pieces[0].volume + r.pieces[1].volume));
+  document.getElementById('vOrig').textContent = fmt(originalVolume);
   document.getElementById('caps').textContent = fmt(capArea(r.pieces[0])) + ' / ' + fmt(capArea(r.pieces[1]));
   const wt = r.pieces.map((p) => (p.audit.closed ? 'yes' : 'no (' + p.audit.boundaryEdges + ' open)'));
   document.getElementById('wt').textContent = wt.join(' / ');
